@@ -8,6 +8,11 @@ JOB_TYPE = (
 )
 
 
+def image_upload(instance,filename):
+    iamgename , extension = filename.split(".")
+    return "jobs/%s.%s"%(instance.id,extension)
+    #return "jobs/%s/%s.%s"%(instance.id,instance.id,extension)
+
 class Job(models.Model):
 
     title = models.CharField( max_length=100)
@@ -18,7 +23,8 @@ class Job(models.Model):
     vacancy = models.IntegerField(default=1)
     salary = models.IntegerField(default=0)
     experience = models.IntegerField(default=1)
-    category = models.ForeignKey('Category', on_delete=models.CASCADE) 
+    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    image = models.ImageField( upload_to=image_upload, height_field=None, width_field=None, max_length=None) 
 
     def __str__(self):
         return self.title
